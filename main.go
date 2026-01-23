@@ -128,7 +128,7 @@ func deleteProduct(w http.ResponseWriter, r *http.Request) {
 // GET localhost:8080/api/categories/{id}
 func getCategoryByID(w http.ResponseWriter, r *http.Request) {
 	// Parse ID dari URL path
-	// URL: /api/catecategoriesgory/123 -> ID = 123
+	// URL: /api/categories/123 -> ID = 123
 	idStr := strings.TrimPrefix(r.URL.Path, "/api/categories/")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
@@ -196,7 +196,7 @@ func deleteCategory(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// loop product cari ID, dapet index yang mau dihapus
+	// loop kategori cari ID, dapet index yang mau dihapus
 	for i, p := range categories {
 		if p.ID == id {
 			// bikin slice baru dengan data sebelum dan sesudah index
@@ -280,7 +280,7 @@ func main() {
 				return
 			}
 
-			// masukkin data ke dalam variable product
+			// masukkin data ke dalam variable categories
 			categoryBaru.ID = len(categories) + 1
 			categories = append(categories, categoryBaru)
 
