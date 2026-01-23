@@ -125,18 +125,18 @@ func deleteProduct(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Product belum ada", http.StatusNotFound)
 }
 
-// GET localhost:8080/api/product/{id}
+// GET localhost:8080/api/categories/{id}
 func getCategoryByID(w http.ResponseWriter, r *http.Request) {
 	// Parse ID dari URL path
-	// URL: /api/category/123 -> ID = 123
-	idStr := strings.TrimPrefix(r.URL.Path, "/api/category/")
+	// URL: /api/categories/123 -> ID = 123
+	idStr := strings.TrimPrefix(r.URL.Path, "/api/categories/")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		http.Error(w, "Invalid Category ID", http.StatusBadRequest)
 		return
 	}
 
-	// Cari kaetegori dengan ID tersebut
+	// Cari kategori dengan ID tersebut
 	for _, p := range categories {
 		if p.ID == id {
 			w.Header().Set("Content-Type", "application/json")
@@ -149,10 +149,10 @@ func getCategoryByID(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Category belum ada", http.StatusNotFound)
 }
 
-// PUT localhost:8080/api/product/{id}
+// PUT localhost:8080/api/categories/{id}
 func updateCategory(w http.ResponseWriter, r *http.Request) {
 	// get id dari request
-	idStr := strings.TrimPrefix(r.URL.Path, "/api/category/")
+	idStr := strings.TrimPrefix(r.URL.Path, "/api/categories/")
 
 	// ganti int
 	id, err := strconv.Atoi(idStr)
@@ -184,10 +184,10 @@ func updateCategory(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Category belum ada", http.StatusNotFound)
 }
 
-// DELETE localhost:8080/api/product/{id}
+// DELETE localhost:8080/api/categories/{id}
 func deleteCategory(w http.ResponseWriter, r *http.Request) {
 	// get id
-	idStr := strings.TrimPrefix(r.URL.Path, "/api/category/")
+	idStr := strings.TrimPrefix(r.URL.Path, "/api/categories/")
 
 	// ganti id int
 	id, err := strconv.Atoi(idStr)
@@ -196,7 +196,7 @@ func deleteCategory(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// loop product cari ID, dapet index yang mau dihapus
+	// loop kategori cari ID, dapet index yang mau dihapus
 	for i, p := range categories {
 		if p.ID == id {
 			// bikin slice baru dengan data sebelum dan sesudah index
@@ -264,9 +264,9 @@ func main() {
 		}
 	})
 
-	// GET localhost:8080/api/category
-	// POST localhost:8080/api/category
-	http.HandleFunc("/api/category", func(w http.ResponseWriter, r *http.Request) {
+	// GET localhost:8080/api/categories
+	// POST localhost:8080/api/categories
+	http.HandleFunc("/api/categories", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case "GET":
 			w.Header().Set("Content-Type", "application/json")
@@ -280,7 +280,7 @@ func main() {
 				return
 			}
 
-			// masukkin data ke dalam variable product
+			// masukkin data ke dalam variable categories
 			categoryBaru.ID = len(categories) + 1
 			categories = append(categories, categoryBaru)
 
@@ -290,10 +290,10 @@ func main() {
 		}
 	})
 
-	// GET localhost:8080/api/category/{id}
-	// PUT localhost:8080/api/category/{id}
-	// DELETE localhost:8080/api/category/{id}
-	http.HandleFunc("/api/category/", func(w http.ResponseWriter, r *http.Request) {
+	// GET localhost:8080/api/categories/{id}
+	// PUT localhost:8080/api/categories/{id}
+	// DELETE localhost:8080/api/categories/{id}
+	http.HandleFunc("/api/categories/", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case "GET":
 			getCategoryByID(w, r)
