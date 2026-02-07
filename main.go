@@ -61,13 +61,21 @@ func main() {
 	http.HandleFunc("/api/category", categoryHandler.HandleCategories)
 	http.HandleFunc("/api/category/", categoryHandler.HandleProductByID)
 
-	// Transaction
+	// Transaction dependency injection
 	transactionRepo := repositories.NewTransactionRepository(db)
 	transactionService := services.NewTransactionService(transactionRepo)
 	transactionHandler := handlers.NewTransactionHandler(transactionService)
 
 	// Setup routes transaction
 	http.HandleFunc("/api/checkout", transactionHandler.HandleCheckout)
+
+	// Report dependency injection
+	reportRepo := repositories.NewReportRepository(db)
+	reportService := services.NewReportService(reportRepo)
+	reportHandler := handlers.NewReportHandler(reportService)
+
+	// Setup routes transaction
+	http.HandleFunc("/api/report/hari-ini", reportHandler.TodayReport)
 
 	// localhost:8080/health
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
