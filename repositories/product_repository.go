@@ -15,11 +15,11 @@ func NewProductRepository(db *sql.DB) *ProductRepository {
 }
 
 func (repo *ProductRepository) GetAll(nameFilter string) ([]models.Product, error) {
-	query := "SELECT id, name, price, stock FROM product"
+	query := "SELECT id, name, price, stock FROM product p"
 
 	args := []interface{}{}
 	if nameFilter != "" {
-		query += " WHERE product.name ILIKE $1"
+		query += " WHERE p.name ILIKE $1"
 		args = append(args, "%"+nameFilter+"%")
 	}
 
