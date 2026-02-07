@@ -75,6 +75,7 @@ func main() {
 	reportHandler := handlers.NewReportHandler(reportService)
 
 	// Setup routes transaction
+	http.HandleFunc("/api/report", reportHandler.ReportByDate)
 	http.HandleFunc("/api/report/hari-ini", reportHandler.TodayReport)
 
 	// localhost:8080/health
